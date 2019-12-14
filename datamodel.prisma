@@ -1,0 +1,82 @@
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}
+
+type File {
+  id: ID! @id
+  path: String!
+  mimetype: String!
+  encoding: String!
+}
+
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission] @scalarList(strategy: RELATION)
+  cart: [CartItem!]! 
+}
+
+type Item {
+  id: ID! @id
+  title: String!
+  description: String!
+  image: String
+  largeImage: String
+  price: Int!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  user: User! 
+  inventoryLevel: Int @default(value: 1)
+}
+
+type CartItem {
+  id: ID! @id
+  quantity: Int! @default(value: 1)
+  item: Item
+  user: User! 
+}
+
+type OrderItem {
+  id: ID! @id
+  title: String!
+  description: String!
+  image: String!
+  largeImage: String!
+  price: Int!
+  quantity: Int! @default(value: 1)
+  user: User 
+
+}
+
+type Order {
+  id: ID! @id
+  items: [OrderItem!]! 
+  total: Int!
+  user: User! 
+  charge: String! 
+  billing_address_city: String
+  billing_address_country: String
+  billing_address_country_code: String
+  billing_address_line1: String
+  billing_address_state: String
+  billing_address_zip: String
+  billing_name: String
+  shipping_address_city: String
+  shipping_address_country: String
+  shipping_address_country_code: String
+  shipping_address_line1: String
+  shipping_address_state: String
+  shipping_address_zip: String
+  shipping_name: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
