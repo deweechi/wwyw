@@ -40,7 +40,7 @@ me(parent, args, ctx, info) {
         //check permiss
         const ownsOrder = order.user.id === ctx.request.userId;
         const hasAdminPermission = ctx.request.user.permissions.includes('ADMIN');
-        if (!ownsOrder || !hasAdminPermission) {
+        if (!ownsOrder && !hasAdminPermission) {
             throw new Error('This order either cannot be found or you do not have permission to view it.');
         }
         //return the order
