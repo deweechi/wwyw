@@ -7,6 +7,11 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
+type Category {
+  id: ID! @id
+  category: String!
+}
+
 type File {
   id: ID! @id
   path: String!
@@ -36,6 +41,7 @@ type Item {
   updatedAt: DateTime! @updatedAt
   user: User! 
   inventoryLevel: Int @default(value: 1)
+  category: Category
 }
 
 type CartItem {
@@ -80,3 +86,4 @@ type Order {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
+
